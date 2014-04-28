@@ -1,7 +1,7 @@
 
 # R functions to detrend RT sequences
 
-Email questions about the code to pfc <AT> stat.osu.edu
+Email questions about the code to pfc &lt;AT&gt; stat.osu.edu
 
 Supported by the National Science Foundation under award numbers
 BCS-0738059, DMS-0604963, DMS-0605052, SES-0214574 and SES-0437251.
