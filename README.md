@@ -1,5 +1,5 @@
 
-# R functions to detrend RT sequences
+# R functions to detrend response time (RT) sequences
 
 Email questions about the code to pfc &lt;AT&gt; stat.osu.edu
 

@@ -12,7 +12,7 @@
 
 ## ======================================================================
 ## File     : detrending_RT.R
-## Contains : R code to detrend RT sequences.
+## Contains : R code to detrend response time (RT) sequences.
 ## Version  : 0.1
 ## Updated  : pfc@stat.osu.edu, Sep 2008.
 ##
