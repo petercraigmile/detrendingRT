@@ -25,7 +25,10 @@
 ## Methodology (Vol. 4). New York, NY: Taylor and Francis.
 ## ======================================================================
 
-
+## ======================================================================
+## est.smoothing.splines2 and est.norm.smoothing.splines2 added to avoid
+## use of deprecated "assist" package, now uses package "mgcv".
+## ======================================================================
 
 
 transform.to.normal <- function (x) {
@@ -73,9 +76,6 @@ transform.back <- function (x.norm.fitted, x,
   }
   x.fitted
 }
-
-
-
 
 
 est.poly.trend <- function (x, deg=2) {
@@ -189,4 +189,56 @@ est.norm.smoothing.splines <- function (x, AR1.errors=TRUE) {
   rm(est.norm.ss.x, est.norm.ss.ts)
   
   fit  
+}
+
+
+est.smoothing.splines2 <- function (x, AR1.errors=TRUE) {
+  ## ======================================================================
+  ## estimate the trend from a time series 'x' by using a smoothing spline.
+  ## If 'AR1.errors' is TRUE use an AR(1) error structure, otherwise
+  ## assume the errors are uncorrelated.
+  ##
+  ## Requires the "mgcv" library in R.
+  ## ======================================================================
+
+  est.ss.x  <- x
+  est.ss.ts <- seq(length(x))/length(x)
+
+  require(mgcv)
+  
+  if (AR1.errors)
+    fit <- gamm(est.ss.x ~ s(est.ss.ts, bs = "cr"), correlation=corAR1())$gam$fitted
+  else
+    fit <- gamm(est.ss.x ~ s(est.ss.ts, bs = "cr"))$gam$fitted 
+  
+  return(fit)
+}
+
+
+est.norm.smoothing.splines2 <- function (x, AR1.errors=TRUE) {
+  ## ======================================================================
+  ## estimate the trend from a time series 'x' after transforming to
+  ## normal scores by using a smoothing spline.  The estimated trend is
+  ## transformed back to the original scale.
+  ## If 'AR1.errors' is TRUE use an AR(1) error structure, otherwise  
+  ## assume the errors are uncorrelated.
+  ##
+  ## Requires the "mgcv" library in R.
+  ## ======================================================================
+  
+
+  est.norm.ss.x.norm <- transform.to.normal(x)
+  est.norm.ss.ts     <- seq(length(x))/length(x)
+
+  require(mgcv)
+  
+  if (AR1.errors) {
+    fitted.norm <- gamm(est.norm.ss.x.norm ~ s(est.norm.ss.ts, bs = "cr"), correlation=corAR1())$gam$fitted
+  } else {
+    fitted.norm <- gamm(est.norm.ss.x.norm ~ s(est.norm.ss.ts, bs = "cr"))$gam$fitted 
+  }
+  
+  fit <- transform.back(fitted.norm, x, est.norm.ss.x.norm)
+  
+  return(fit)  
 }
