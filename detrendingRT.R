@@ -13,8 +13,8 @@
 ## ======================================================================
 ## File     : detrending_RT.R
 ## Contains : R code to detrend response time (RT) sequences.
-## Version  : 0.1
-## Updated  : pfc@stat.osu.edu, Sep 2008.
+## Version  : 0.2
+## Updated  : pfc@stat.osu.edu, May 2014
 ##
 ## Reference:
 ##
@@ -26,8 +26,10 @@
 ## ======================================================================
 
 ## ======================================================================
-## est.smoothing.splines2 and est.norm.smoothing.splines2 added to avoid
-## use of deprecated "assist" package, now uses package "mgcv".
+## Edits due to jchrszcz on github
+##
+## est.smoothing.splines.mgcv and est.norm.smoothing.splines.mgcv use
+## the package "mgcv", to avoid use of deprecated "assist" R package.
 ## ======================================================================
 
 
@@ -192,7 +194,7 @@ est.norm.smoothing.splines <- function (x, AR1.errors=TRUE) {
 }
 
 
-est.smoothing.splines2 <- function (x, AR1.errors=TRUE) {
+est.smoothing.splines.mgcv <- function (x, AR1.errors=TRUE) {
   ## ======================================================================
   ## estimate the trend from a time series 'x' by using a smoothing spline.
   ## If 'AR1.errors' is TRUE use an AR(1) error structure, otherwise
@@ -215,7 +217,7 @@ est.smoothing.splines2 <- function (x, AR1.errors=TRUE) {
 }
 
 
-est.norm.smoothing.splines2 <- function (x, AR1.errors=TRUE) {
+est.norm.smoothing.splines.mgcv <- function (x, AR1.errors=TRUE) {
   ## ======================================================================
   ## estimate the trend from a time series 'x' after transforming to
   ## normal scores by using a smoothing spline.  The estimated trend is
